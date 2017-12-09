@@ -54,3 +54,10 @@ class ZhihuSpiderMiddleware(object):
 
     def spider_opened(self, spider):
         spider.logger.info('Spider opened: %s' % spider.name)
+
+
+
+class ZhiHuDownloaderMiddleware(object):
+    def process_request(self, request, spider):
+        # Set the location of the proxy
+        request.meta['proxy'] = "http://42.84.176.141:53281"
