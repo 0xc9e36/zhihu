@@ -43,7 +43,7 @@ DEFAULT_REQUEST_HEADERS = {
   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
   'Accept-Language': 'en',
   'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36',
-  'authorization': 'oauth c3cef7c66a1843f8b3a9e6a1e3160e20',
+  'authorization': 'Bearer Mi4xQTRjV0FRQUFBQUFBVUVKU1ZZWE9EQmNBQUFCaEFsVk5Bd29aV3dENFU4UXVJX1JBMFBWUzYzLXVEb3VsT2hQYk53|1512815619|734f479b1d10af314b78e094e80739279fedd3b2',
 }
 
 # Enable or disable spider middlewares
