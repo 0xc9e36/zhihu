@@ -5,8 +5,9 @@ import scrapy
 import time
 from scrapy import Request, FormRequest
 
-#模拟知乎登录
-#下载验证码到本地，手动输入信息，发送请求
+"""
+    这里不管登录有没有验证码都会要输入一次验证码，不过没关系，我后面会慢慢改进。
+"""
 
 class LoginzhSpider(scrapy.Spider):
     name = 'loginzh'
@@ -17,8 +18,9 @@ class LoginzhSpider(scrapy.Spider):
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
         'Accept-Language': 'en',
         'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36',
-        'authorization': 'Bearer Mi4xQTRjV0FRQUFBQUFBVUVKU1ZZWE9EQmNBQUFCaEFsVk5Bd29aV3dENFU4UXVJX1JBMFBWUzYzLXVEb3VsT2hQYk53|1512815619|734f479b1d10af314b78e094e80739279fedd3b2',
     }
+    EMAIL = '登录邮箱'
+    PASSWORD = '登录密码'
 
     def start_requests(self):
         timestamp = str(int(time.time()))
@@ -50,8 +52,8 @@ class LoginzhSpider(scrapy.Spider):
                           method = 'POST',
                           formdata = {
                               'captcha_type': 'en',
-                              'email': '****',
-                              'password':'****',
+                              'email': self.EMAIL,
+                              'password':self.PASSWORD,
                               '_xsrf': xsrf,
                               'captcha_type': 'en',
                               'captcha': response.meta['captcha'],
