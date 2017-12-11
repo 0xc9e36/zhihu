@@ -6,7 +6,6 @@ from scrapy import Request
 
 from zhihu.items import UserItem
 
-
 class SpiderzhSpider(scrapy.Spider):
     name = 'spiderzh'
     allowed_domains = ['www.zhihu.com']

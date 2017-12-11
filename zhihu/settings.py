@@ -27,7 +27,7 @@ ROBOTSTXT_OBEY = False
 # Configure a delay for requests for the same website (default: 0)
 # See http://scrapy.readthedocs.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-#DOWNLOAD_DELAY = 3
+DOWNLOAD_DELAY = 2
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN = 16
 #CONCURRENT_REQUESTS_PER_IP = 16
@@ -43,7 +43,7 @@ DEFAULT_REQUEST_HEADERS = {
   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
   'Accept-Language': 'en',
   'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36',
-  'authorization': 'Bearer Mi4xQTRjV0FRQUFBQUFBVUVKU1ZZWE9EQmNBQUFCaEFsVk5Bd29aV3dENFU4UXVJX1JBMFBWUzYzLXVEb3VsT2hQYk53|1512815619|734f479b1d10af314b78e094e80739279fedd3b2',
+  'authorization': 'oauth c3cef7c66a1843f8b3a9e6a1e3160e20',
 }
 
 # Enable or disable spider middlewares
@@ -67,7 +67,8 @@ DEFAULT_REQUEST_HEADERS = {
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'zhihu.pipelines.MongoPipeline': 300,
+    'zhihu.pipelines.MongoPipeline': 300,
+    'scrapy_redis.pipelines.RedisPipeline': 301,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -94,3 +95,12 @@ ITEM_PIPELINES = {
 
 MONGO_URI = '127.0.0.1'
 MONGO_DATABASE = 'bihu'
+
+#更改调度器
+SCHEDULER = "scrapy_redis.scheduler.Scheduler"
+
+#去重
+DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
+
+#redis连接
+REDIS_URL = 'redis://root@215679560yy!@112.74.20.150:6379'
