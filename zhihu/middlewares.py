@@ -4,7 +4,7 @@
 #
 # See documentation in:
 # http://doc.scrapy.org/en/latest/topics/spider-middleware.html
-
+import time
 from scrapy import signals
 
 
@@ -58,6 +58,20 @@ class ZhihuSpiderMiddleware(object):
 
 
 class ZhiHuDownloaderMiddleware(object):
-    def process_request(self, request, spider):
-        # Set the location of the proxy
-        request.meta['proxy'] = "http://42.84.176.141:53281"
+    # def process_request(self, request, spider):
+    #     # Set the location of the proxy
+    #     request.meta['proxy'] = "http://42.84.176.141:53281"
+
+    def process_response(self, request, response, spider):
+        if response.status != 200 :
+            # print('*************************************')
+            print('请求头：', request.headers)
+            print(response.status, '请求url是', request.url)
+            print('响应头',response.headers)
+            print('响应主体', response.text)
+            # print('请求callback', request.callback)
+            # print('响应头：', response.headers)
+            # print(response.text)
+            # print('*************************************')
+            time.sleep(30)
+        return response

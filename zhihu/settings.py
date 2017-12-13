@@ -9,6 +9,10 @@
 #     http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 #     http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 
+from fake_useragent import UserAgent
+
+ua = UserAgent()
+
 BOT_NAME = 'zhihu'
 
 SPIDER_MODULES = ['zhihu.spiders']
@@ -27,7 +31,7 @@ ROBOTSTXT_OBEY = False
 # Configure a delay for requests for the same website (default: 0)
 # See http://scrapy.readthedocs.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-DOWNLOAD_DELAY = 2
+DOWNLOAD_DELAY = 0.5
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN = 16
 #CONCURRENT_REQUESTS_PER_IP = 16
@@ -36,14 +40,16 @@ DOWNLOAD_DELAY = 2
 COOKIES_ENABLED = True
 
 # Disable Telnet Console (enabled by default)
-#TELNETCONSOLE_ENABLED = False
+TELNETCONSOLE_ENABLED = False
 
 # Override the default request headers:
 DEFAULT_REQUEST_HEADERS = {
-  'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-  'Accept-Language': 'en',
-  'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36',
+  'Accept': 'application/json, text/plain, */*',
+  'Accept-Language': 'en-US,en;q=0.9',
+  #随机 UA
+  'User-Agent': ua.random,
   'authorization': 'oauth c3cef7c66a1843f8b3a9e6a1e3160e20',
+  'Connection': 'keep-alive',
 }
 
 # Enable or disable spider middlewares
@@ -54,9 +60,10 @@ DEFAULT_REQUEST_HEADERS = {
 
 # Enable or disable downloader middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
-# DOWNLOADER_MIDDLEWARES = {
-#    'zhihu.middlewares.ZhiHuDownloaderMiddleware': 543,
-# }
+DOWNLOADER_MIDDLEWARES = {
+   #'zhihu.middlewares.ZhiHuDownloaderMiddleware': 543,
+   #'scrapy.contrib.downloadermiddleware.retry.RetryMiddleware': 544,
+}
 
 # Enable or disable extensions
 # See http://scrapy.readthedocs.org/en/latest/topics/extensions.html
@@ -68,7 +75,7 @@ DEFAULT_REQUEST_HEADERS = {
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
     'zhihu.pipelines.MongoPipeline': 300,
-    'scrapy_redis.pipelines.RedisPipeline': 301,
+ #   'scrapy_redis.pipelines.RedisPipeline': 301,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -103,4 +110,16 @@ SCHEDULER = "scrapy_redis.scheduler.Scheduler"
 DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
 
 #redis连接
-REDIS_URL = 'redis://root@215679560yy!@112.74.20.150:6379'
+REDIS_URL = 'redis://112.74.20.150:6379'
+
+
+# Don't cleanup redis queues, allows to pause/resume crawls.
+#SCHEDULER_PERSIST = True
+
+#重试5次
+# RETRY_ENABLED = True
+# RETRY_TIMES = 3
+# RETRY_HTTP_CODES = [500, 502, 503, 504, 400, 401, 408]
+
+
+LOG_LEVEL = "DEBUG"

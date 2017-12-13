@@ -1,1 +1,18 @@
 # Created by .ignore support plugin (hsz.mobi)
+/build/
+/dbs/
+/eggs/
+/logs/
+/project.egg-info/
+/twistd.pid
+.idea/inspectionProfiles/
+.idea/workspace.xml
+build/
+dbs/
+eggs/
+logs/
+project.egg-info/
+setup.py
+twistd.pid
+zhihu/__pycache__/
+zhihu/spiders/__pycache__/
