@@ -124,5 +124,4 @@ REDIS_URL = 'redis://112.74.20.150:6379'
 
 LOG_LEVEL = "DEBUG"
 
-
 PROXY_URL = 'http://123.207.90.35:5000/get'

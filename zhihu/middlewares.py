@@ -4,8 +4,12 @@
 #
 # See documentation in:
 # http://doc.scrapy.org/en/latest/topics/spider-middleware.html
+
+import requests
 import time
 from scrapy import signals
+
+from zhihu.settings import SET_PROXY, PROXY_URL
 
 
 class ZhihuSpiderMiddleware(object):
@@ -58,20 +62,26 @@ class ZhihuSpiderMiddleware(object):
 
 
 class ZhiHuDownloaderMiddleware(object):
-    # def process_request(self, request, spider):
-    #     # Set the location of the proxy
-    #     request.meta['proxy'] = "http://42.84.176.141:53281"
+
+
+    def process_request(self, request, spider):
+        # Set the location of the proxy
+        if self.SET_PROXY:
+            try:
+                response = requests.get(PROXY_URL)
+                if response.status_code == 200:
+                    request.meta['proxy'] = response.text
+                    print('更换代理', response.text)
+                    time.sleep(30)
+            except Exception:
+                print('设置代理失败')
+            self.SET_PROXY = False
+
 
     def process_response(self, request, response, spider):
         if response.status != 200 :
-            # print('*************************************')
-            print('请求头：', request.headers)
-            print(response.status, '请求url是', request.url)
-            print('响应头',response.headers)
-            print('响应主体', response.text)
-            # print('请求callback', request.callback)
-            # print('响应头：', response.headers)
-            # print(response.text)
-            # print('*************************************')
-            time.sleep(30)
+            print('状态码', response.status)
+            self.SET_PROXY = True
         return response
+
+
