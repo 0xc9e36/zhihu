@@ -61,7 +61,7 @@ DEFAULT_REQUEST_HEADERS = {
 # Enable or disable downloader middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
-   #'zhihu.middlewares.ZhiHuDownloaderMiddleware': 543,
+   #'zhihu.middlewares.ZhiHuDownloaderMiddleware': 290,
    #'scrapy.contrib.downloadermiddleware.retry.RetryMiddleware': 544,
 }
 
@@ -123,3 +123,6 @@ REDIS_URL = 'redis://112.74.20.150:6379'
 
 
 LOG_LEVEL = "DEBUG"
+
+
+PROXY_URL = 'http://123.207.90.35:5000/get'
