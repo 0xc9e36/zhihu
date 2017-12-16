@@ -61,7 +61,7 @@ DEFAULT_REQUEST_HEADERS = {
 # Enable or disable downloader middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
-   #'zhihu.middlewares.ZhiHuDownloaderMiddleware': 290,
+   'zhihu.middlewares.ZhiHuDownloaderMiddleware': 290,
    #'scrapy.contrib.downloadermiddleware.retry.RetryMiddleware': 544,
 }
 
@@ -116,12 +116,17 @@ REDIS_URL = 'redis://112.74.20.150:6379'
 # Don't cleanup redis queues, allows to pause/resume crawls.
 #SCHEDULER_PERSIST = True
 
-#重试5次
-# RETRY_ENABLED = True
-# RETRY_TIMES = 3
-# RETRY_HTTP_CODES = [500, 502, 503, 504, 400, 401, 408]
+#重试2次
+RETRY_ENABLED = True
+RETRY_TIMES = 2
+RETRY_HTTP_CODES = [500, 502, 503, 504, 400, 401, 408]
 
 
 LOG_LEVEL = "DEBUG"
 
 PROXY_URL = 'http://123.207.90.35:5000/get'
+USE_PROXY = True
+
+CONCURRENT_REQUESTS = 80
+
+COOKIES_ENABLED = False

@@ -9,7 +9,7 @@ from zhihu.items import UserItem
 
 class SpiderzhSpider(scrapy.Spider):
     name = 'spiderzh'
-    #allowed_domains = ['www.zhihu.com']
+    allowed_domains = ['www.zhihu.com']
 
     #初始用户
     first_user = 'javabody'

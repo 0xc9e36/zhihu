@@ -9,7 +9,7 @@ import requests
 import time
 from scrapy import signals
 
-from zhihu.settings import SET_PROXY, PROXY_URL
+from zhihu.settings import USE_PROXY, PROXY_URL
 
 
 class ZhihuSpiderMiddleware(object):
@@ -63,25 +63,28 @@ class ZhihuSpiderMiddleware(object):
 
 class ZhiHuDownloaderMiddleware(object):
 
+    def __init__(self):
+        self._proxy = None
+        #每个代理使用次数
+        self._count = 20
 
     def process_request(self, request, spider):
         # Set the location of the proxy
-        if self.SET_PROXY:
-            try:
-                response = requests.get(PROXY_URL)
-                if response.status_code == 200:
-                    request.meta['proxy'] = response.text
-                    print('更换代理', response.text)
-                    time.sleep(30)
-            except Exception:
-                print('设置代理失败')
-            self.SET_PROXY = False
-
+        if USE_PROXY and self._proxy:
+            print('设置代理', self._proxy)
+            self._count -= 1
+            request.meta['proxy'] = self._proxy
 
     def process_response(self, request, response, spider):
-        if response.status != 200 :
+        if response.status != 200 or self._count <= 0:
             print('状态码', response.status)
-            self.SET_PROXY = True
+            print('使用次数', self._count)
+            if USE_PROXY:
+                r = requests.get(PROXY_URL)
+                if r.status_code == 200:
+                    self._proxy = r.text
+                    self._count = 20
+                    time.sleep(5)
         return response
 
 
